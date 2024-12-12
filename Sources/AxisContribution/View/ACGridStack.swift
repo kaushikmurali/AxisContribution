@@ -45,7 +45,6 @@ struct ACGridStack<B, F>: View where B: View, F: View {
     // MARK: - Properties
 
     /// Property that displays the grid view.
-    print("Rendering grid with data count:", store.data?.count ?? 0)
     private var content: some View {
         let spacing = store.constant.spacing
         return ZStack {
