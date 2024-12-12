@@ -64,7 +64,7 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
                         HStack(spacing: 0) {
                             content
                         }
-                        .frame(alignment: .trailing)
+                        .contentShape(Rectangle())
                     }else {
                         VStack(spacing: 0) {
                             content
@@ -82,6 +82,13 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
         }
         .onAppear(perform: {
             self.fetch()
+
+            // Scroll to trailing edge on initial appear
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation {
+                    proxy.scrollTo("scrollContent", anchor: constant.axisMode == .horizontal ? .trailing : .bottom)
+                }
+            }
         })
     }
     
