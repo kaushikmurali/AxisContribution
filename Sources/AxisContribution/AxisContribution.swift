@@ -89,7 +89,7 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
             store.setup(constant: self.constant, source: newValue)
 
             // Scroll to trailing edge when data changes
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
                 withAnimation {
                     scrollProxy?.scrollTo("scrollContent", anchor: constant.axisMode == .horizontal ? .trailing : .bottom)
                 }
@@ -99,7 +99,7 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
             self.fetch()
 
             // Scroll to trailing edge on initial appear
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
                 withAnimation {
                     scrollProxy?.scrollTo("scrollContent", anchor: constant.axisMode == .horizontal ? .trailing : .bottom)
                 }
