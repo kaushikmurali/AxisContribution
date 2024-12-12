@@ -50,17 +50,6 @@ struct ACGridStack<B, F>: View where B: View, F: View {
         return ZStack {
             if constant.axisMode == .horizontal {
                 HStack(alignment: .top, spacing: spacing) {
-                    VStack(alignment: .trailing, spacing: 0) {
-                        Text("M")
-                            .frame(height: rowSize.height)
-                            .padding(.top, rowSize.height * 2 + spacing * 2)
-                        Text("W")
-                            .frame(height: rowSize.height)
-                            .padding(.top, rowSize.height + spacing * 2)
-                        Text("F")
-                            .frame(height: rowSize.height)
-                            .padding(.top, rowSize.height + spacing * 2)
-                    }
                     ForEach(Array(store.datas.enumerated()), id: \.offset) { column, datas in
                         LazyVStack(alignment: .leading, spacing: spacing) {
                             Rectangle()
@@ -72,18 +61,24 @@ struct ACGridStack<B, F>: View where B: View, F: View {
                             }
                         }
                     }
+
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("M")
+                            .frame(height: rowSize.height)
+                            .padding(.top, rowSize.height * 2 + spacing * 2)
+                            .foregroundColor(Calendar.current.component(.weekday, from: today) == 2 ? .orange : nil)
+                        Text("W")
+                            .frame(height: rowSize.height)
+                            .padding(.top, rowSize.height + spacing * 2)
+                            .foregroundColor(Calendar.current.component(.weekday, from: today) == 4 ? .orange : nil)
+                        Text("F")
+                            .frame(height: rowSize.height)
+                            .padding(.top, rowSize.height + spacing * 2)
+                            .foregroundColor(Calendar.current.component(.weekday, from: today) == 6 ? .orange : nil)
+                    }
                 }
             } else {
                 VStack(alignment: .leading, spacing: spacing) {
-                    ZStack(alignment: .bottom) {
-                        let size = titleWidth
-                        Text("M")
-                            .offset(x: size + (rowSize.width * 1 + spacing * 2))
-                        Text("W")
-                            .offset(x: size + (rowSize.width * 3 + spacing * 4))
-                        Text("F")
-                            .offset(x: size + (rowSize.width * 5 + spacing * 5))
-                    }
                     ForEach(Array(store.datas.enumerated()), id: \.offset) { column, datas in
                         HStack(alignment: .top, spacing: spacing) {
                             Rectangle()
@@ -95,9 +90,32 @@ struct ACGridStack<B, F>: View where B: View, F: View {
                             }
                         }
                     }
+
+                    ZStack(alignment: .bottom) {
+                        let size = titleWidth
+                        Text("M")
+                            .offset(x: size + (rowSize.width * 1 + spacing * 2))
+                        Text("W")
+                            .offset(x: size + (rowSize.width * 3 + spacing * 4))
+                        Text("F")
+                            .offset(x: size + (rowSize.width * 5 + spacing * 5))
+                    }
                 }
             }
         }
+    }
+
+    // Add these helper functions
+    private func isCurrentMonth(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        return calendar.isDate(date, equalTo: today, toGranularity: .month)
+    }
+    
+    private func isToday(_ date: Date) -> Bool {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        return calendar.isDate(date, equalTo: today, toGranularity: .day)
     }
     
     // MARK: - Methods
@@ -112,7 +130,7 @@ struct ACGridStack<B, F>: View where B: View, F: View {
         ZStack {
             background?(ACIndexSet(column: column, row: row), data)
             foreground?(ACIndexSet(column: column, row: row), data)
-                .opacity(getOpacity(count: data.count))
+                //.opacity(getOpacity(count: data.count))
                 .takeSize($rowSize)
         }
     }
