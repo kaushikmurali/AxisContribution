@@ -41,6 +41,9 @@ struct ACGridStack<B, F>: View where B: View, F: View {
         content
             .font(store.constant.font)
     }
+
+    let spacing = constant.spacing
+    let today = Calendar.current.startOfDay(for: Date())
     
     // MARK: - Properties
 
