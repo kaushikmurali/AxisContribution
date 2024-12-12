@@ -62,9 +62,10 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
                 ScrollView(constant.axisMode == .horizontal ? .horizontal : .vertical, showsIndicators: false) {
                     if constant.axisMode == .horizontal {
                         HStack(spacing: 0) {
+                            Spacer()
                             content
                         }
-                        .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                        .contentShape(Rectangle())
                     }else {
                         VStack(spacing: 0) {
                             content
