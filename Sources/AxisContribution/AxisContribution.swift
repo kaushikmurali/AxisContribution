@@ -62,10 +62,9 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
                 ScrollView(constant.axisMode == .horizontal ? .horizontal : .vertical, showsIndicators: false) {
                     if constant.axisMode == .horizontal {
                         HStack(spacing: 0) {
-                            Spacer()
                             content
                         }
-                        .contentShape(Rectangle())
+                        .frame(alignment: .trailing)
                     }else {
                         VStack(spacing: 0) {
                             content
