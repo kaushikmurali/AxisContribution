@@ -71,6 +71,11 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
                                 }
                         }
                         .contentShape(Rectangle())
+                        .onAppear {
+                            withAnimation {
+                                proxy.scrollTo(trailing, anchor: .trailing)
+                            }
+                        }
                     }else {
                         VStack(spacing: 0) {
                             content
