@@ -30,27 +30,33 @@ public class ACDataProvider {
     
     public static let shared = ACDataProvider()
     
-    /// Generate data from start date to end date.
-    /// - Parameters:
-    ///   - constant: Settings that define the contribution view.
-    ///   - sourceDates: An array of contributed dates.
-    /// - Returns: mapped data
     public func mappedData(constant: ACConstant, source sourceDates: [Date: ACData]) -> [[ACData]] {
         var newDatas = [[ACData]]()
         var dateWeekly = Date.datesWeekly(from: constant.fromDate, to: constant.toDate)
         if constant.axisMode == .vertical {
             dateWeekly = dateWeekly.reversed()
         }
-        dateWeekly.forEach { date in
-            let datas = date.datesInWeek.map { date -> ACData in
-                if let data = sourceDates[date] {
-                    return data
-                } else {
-                    return ACData(date: date, count: 0)
+        
+        let today = Calendar.current.startOfDay(for: Date())
+        
+        dateWeekly.forEach { dates in
+            // Filter out future dates from each week
+            let datas = dates.datesInWeek
+                .filter { $0 <= today }  // Only include dates up to today
+                .map { date -> ACData in
+                    if let data = sourceDates[date] {
+                        return data
+                    } else {
+                        return ACData(date: date, count: 0)
+                    }
                 }
+            
+            // Only add the week if it has any dates
+            if !datas.isEmpty {
+                newDatas.append(datas)
             }
-            newDatas.append(datas)
         }
+        
         return newDatas
     }
 }
