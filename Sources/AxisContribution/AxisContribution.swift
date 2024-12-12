@@ -55,6 +55,8 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
     
     private var defaultRowSize: CGFloat = 11
     @Namespace private var trailing
+
+    @State private var scrollProxy: ScrollViewProxy?
     
     public var body: some View {
         ScrollViewReader { proxy in
@@ -76,6 +78,10 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
                 }
                 //levelView
             }
+            .onAppear {
+                // Store the proxy when the view appears
+                scrollProxy = proxy
+            }
         }
         .environmentObject(store)
         .onChange(of: sourceDatas) { newValue in
@@ -85,7 +91,7 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
             // Scroll to trailing edge when data changes
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 withAnimation {
-                    proxy.scrollTo("scrollContent", anchor: constant.axisMode == .horizontal ? .trailing : .bottom)
+                    scrollProxy?.scrollTo("scrollContent", anchor: constant.axisMode == .horizontal ? .trailing : .bottom)
                 }
             }
         }
@@ -95,7 +101,7 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
             // Scroll to trailing edge on initial appear
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 withAnimation {
-                    proxy.scrollTo("scrollContent", anchor: constant.axisMode == .horizontal ? .trailing : .bottom)
+                    scrollProxy?.scrollTo("scrollContent", anchor: constant.axisMode == .horizontal ? .trailing : .bottom)
                 }
             }
         })
