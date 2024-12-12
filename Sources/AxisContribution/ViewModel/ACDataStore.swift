@@ -45,6 +45,9 @@ public class ACDataStore: ObservableObject {
     ///   - constant: Settings that define the contribution view.
     ///   - sourceDates: An array of contributed dates.
     func setup(constant: ACConstant, source sourceDates: [Date: ACData]? = nil) {
+        print("Processing data in store:")
+        print("- Number of days:", source.count)
+        print("- Sample dates:", source.keys.prefix(3))
         self.constant = constant
         if let sourceDates = sourceDates {
             self.datas = ACDataProvider.shared.mappedData(constant: constant, source: sourceDates)
