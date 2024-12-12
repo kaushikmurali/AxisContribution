@@ -78,7 +78,7 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
                         .contentShape(Rectangle())
                     }
                 }
-                //levelView
+                levelView
             }
         }
         .environmentObject(store)
