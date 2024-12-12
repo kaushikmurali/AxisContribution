@@ -160,7 +160,7 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
     ///   - data: The model that defines the row view.
     /// - Returns: -
     private func getBackgroundView(_ indexSet: ACIndexSet? = nil, _ data: ACData? = nil) -> some View {
-        print("Background called with data:", data?.date ?? "nil")  // Debug print
+        //print("Background called with data:", data?.date ?? "nil")  // Debug print
         return Group {
             if let background = background {
                 background(indexSet, data)
@@ -176,7 +176,7 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
     ///   - data: The model that defines the row view.
     /// - Returns: -
     private func getForegroundView(_ indexSet: ACIndexSet? = nil, _ data: ACData? = nil) -> some View {
-        print("Foreground called with data:", data?.date ?? "nil")  // Debug print
+        //print("Foreground called with data:", data?.date ?? "nil")  // Debug print
         return Group {
             if let foreground = foreground {
                 foreground(indexSet, data)
