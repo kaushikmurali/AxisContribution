@@ -151,14 +151,15 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
     ///   - data: The model that defines the row view.
     /// - Returns: -
     private func getBackgroundView(_ indexSet: ACIndexSet? = nil, _ data: ACData? = nil) -> some View {
-        Group {
-            if let background = background {
-                background(indexSet, data)
-            }else {
-                defaultBackground
+        print("Background called with data:", data?.date ?? "nil")  // Debug print
+            Group {
+                if let background = background {
+                    background(indexSet, data)
+                } else {
+                    defaultBackground
+                }
             }
         }
-    }
     
     /// The foreground view of the row view.
     /// - Parameters:
@@ -166,10 +167,11 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
     ///   - data: The model that defines the row view.
     /// - Returns: -
     private func getForegroundView(_ indexSet: ACIndexSet? = nil, _ data: ACData? = nil) -> some View {
+        print("Foreground called with data:", data?.date ?? "nil")  // Debug print
         Group {
             if let foreground = foreground {
                 foreground(indexSet, data)
-            }else {
+            } else {
                 defaultForeground
             }
         }
