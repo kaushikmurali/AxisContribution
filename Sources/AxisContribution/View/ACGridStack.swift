@@ -68,15 +68,15 @@ struct ACGridStack<B, F>: View where B: View, F: View {
                         Text("M")
                             .frame(height: rowSize.height)
                             .padding(.top, rowSize.height * 2 + spacing * 2)
-                            .foregroundColor(Calendar.current.component(.weekday, from: today) == 2 ? .orange : nil)
+                            .foregroundColor(Calendar.current.component(.weekday, from: today) == 2 ? Color(hex: "#FD8153") : Color(hex: "#AAAAAA"))
                         Text("W")
                             .frame(height: rowSize.height)
                             .padding(.top, rowSize.height + spacing * 2)
-                            .foregroundColor(Calendar.current.component(.weekday, from: today) == 4 ? .orange : nil)
+                            .foregroundColor(Calendar.current.component(.weekday, from: today) == 4 ? Color(hex: "#FD8153") : Color(hex: "#AAAAAA"))
                         Text("F")
                             .frame(height: rowSize.height)
                             .padding(.top, rowSize.height + spacing * 2)
-                            .foregroundColor(Calendar.current.component(.weekday, from: today) == 6 ? .orange : nil)
+                            .foregroundColor(Calendar.current.component(.weekday, from: today) == 6 ? Color(hex: "#FD8153") : Color(hex: "#AAAAAA"))
                     }
                 }
             } else {
@@ -148,6 +148,7 @@ struct ACGridStack<B, F>: View where B: View, F: View {
                         Text(monthTitle(store.datas[column][0].date))
                             .lineLimit(1)
                             .fixedSize(horizontal: true, vertical: false)
+                            .foregroundColor(isCurrentMonth(store.datas[column][0].date) ? Color(hex: "#FD8153") : Color(hex: "#AAAAAA"))
                             .takeSize($_titleSize)
                     }
                 } else {
@@ -156,6 +157,7 @@ struct ACGridStack<B, F>: View where B: View, F: View {
                         Text(monthTitle(date))
                             .lineLimit(1)
                             .fixedSize(horizontal: true, vertical: false)
+                            .foregroundColor(isCurrentMonth(date) ? Color(hex: "#FD8153") : Color(hex: "#AAAAAA"))
                             .takeSize($_titleSize)
                     }
                 }
