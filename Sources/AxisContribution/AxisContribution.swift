@@ -92,6 +92,10 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
     }
     
     //MARK: - Properties
+
+    private func normalizeDate(_ date: Date) -> Date {
+        return Calendar.current.startOfDay(for: date)
+    }
     
     /// A content view that displays a grid view.
     private var content: some View {
