@@ -64,12 +64,14 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
                         HStack(spacing: 0) {
                             content
                         }
-                        .contentShape(Rectangle())
+                        .frame(alignment: .trailing)
+                        .id("scrollContent")
                     }else {
                         VStack(spacing: 0) {
                             content
                         }
                         .contentShape(Rectangle())
+                        .id("scrollContent")
                     }
                 }
                 //levelView
@@ -79,6 +81,13 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
         .onChange(of: sourceDatas) { newValue in
             print("SourceDatas changed:", newValue.count)  // Add debug print
             store.setup(constant: self.constant, source: newValue)
+
+            // Scroll to trailing edge when data changes
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                withAnimation {
+                    proxy.scrollTo("scrollContent", anchor: constant.axisMode == .horizontal ? .trailing : .bottom)
+                }
+            }
         }
         .onAppear(perform: {
             self.fetch()
