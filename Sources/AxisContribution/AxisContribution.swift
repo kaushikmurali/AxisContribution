@@ -83,6 +83,7 @@ public struct AxisContribution<B, F>: View where B: View, F: View {
         }
         .environmentObject(store)
         .onChange(of: sourceDatas) { newValue in
+            print("SourceDatas changed:", newValue.count)  // Add debug print
             store.setup(constant: self.constant, source: newValue)
         }
         .onAppear(perform: {
